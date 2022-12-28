@@ -25,14 +25,14 @@ class CsvSeparator:
         необходимая кодировка -- utf-8-sig
         '''
         with open(path, 'w', encoding='utf-8-sig') as file:
-            file.writelines([str.join(',',self.head), str.join(',',data)])\
+            file.writelines([str.join(',',self.head)+'\n', str.join(',',data)])
 
     def __update_csv_file(self, path, data):
         """
         добавляет новую строку в существующий csv файл
         """
         with open(path, 'a', encoding='utf-8-sig') as file: 
-            file.write(str.join(',',data))
+            file.write('\n'+str.join(',',data))
 
     def __get_years_abs_path(self, pub_date: str):
         '''
@@ -62,7 +62,7 @@ class CsvSeparator:
                 else:
                     self.__update_csv_file(abs_apth, line)
 def main():
-    sep = CsvSeparator('vacancies_by_year.csv')
+    sep = CsvSeparator('big_years.csv')
     sep.generate_csv_files()
     print('файл успешно разделен')
     
