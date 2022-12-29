@@ -249,7 +249,7 @@ if __name__ == '__main__':
     
     for i in range(number_of_files):
         proc_list[i].start()
-    pr.enable()
+    #pr.enable()
     with condition:
         condition.wait()
     
@@ -263,11 +263,11 @@ if __name__ == '__main__':
     for i in range(number_of_files):
         proc_list[i].join()
     profile_stat = Stats(pr)
-    profile_stat.print_stats()
-    pr.disable()
-    #print('Динамика уровня зарплат по годам:',sort_yeat_dict(years_salary_dict))
-    #print('Динамика количества вакансий по годам:',sort_yeat_dict(years_vac_dict))
-    #print('Динамика уровня зарплат по годам для выбранной профессии:',sort_yeat_dict(years_salary_prof_dict))
-    #print('Динамика количества вакансий по годам для выбранной профессии:',sort_yeat_dict(yaers_vac_prof_dict))
-    #print('Уровень зарплат по городам (в порядке убывания):',cities_stat.cities_salary_dict)
-    #print('Доля вакансий по городам (в порядке убывания):',cities_stat.cities_vac_dict)
+    #profile_stat.print_stats()
+    #pr.disable()
+    print('Динамика уровня зарплат по годам:',sort_yeat_dict(years_salary_dict))
+    print('Динамика количества вакансий по годам:',sort_yeat_dict(years_vac_dict))
+    print('Динамика уровня зарплат по годам для выбранной профессии:',sort_yeat_dict(years_salary_prof_dict))
+    print('Динамика количества вакансий по годам для выбранной профессии:',sort_yeat_dict(yaers_vac_prof_dict))
+    print('Уровень зарплат по городам (в порядке убывания):',cities_stat.cities_salary_dict)
+    print('Доля вакансий по городам (в порядке убывания):',cities_stat.cities_vac_dict)
