@@ -3,7 +3,8 @@ import csv
 import multiprocessing as mp
 import time
 from pathlib import Path
-
+from cProfile import Profile
+from pstats import Stats
 class Translator:
     currency_to_rub = {  
         "AZN": 35.68,  
@@ -213,7 +214,7 @@ if __name__ == '__main__':
     '''
     connect = InputConnect()
     this_dir = Path(__file__).resolve().parent
-
+    pr = Profile()
     years_dir_path = Path.joinpath(this_dir, connect.file_name)
     prof_name = connect.profession
 
@@ -248,7 +249,7 @@ if __name__ == '__main__':
     
     for i in range(number_of_files):
         proc_list[i].start()
-    
+    pr.enable()
     with condition:
         condition.wait()
     
@@ -258,13 +259,15 @@ if __name__ == '__main__':
         for cities_vacancy in years_list]#распаковка списка из данных о вакансиях по годам в один список для сбора статистики по городам
         
         cities_stat = CitiesStat(sities_set)
-
+    
     for i in range(number_of_files):
         proc_list[i].join()
-
-    print('Динамика уровня зарплат по годам:',sort_yeat_dict(years_salary_dict))
-    print('Динамика количества вакансий по годам:',sort_yeat_dict(years_vac_dict))
-    print('Динамика уровня зарплат по годам для выбранной профессии:',sort_yeat_dict(years_salary_prof_dict))
-    print('Динамика количества вакансий по годам для выбранной профессии:',sort_yeat_dict(yaers_vac_prof_dict))
-    print('Уровень зарплат по городам (в порядке убывания):',cities_stat.cities_salary_dict)
-    print('Доля вакансий по городам (в порядке убывания):',cities_stat.cities_vac_dict)
+    profile_stat = Stats(pr)
+    profile_stat.print_stats()
+    pr.disable()
+    #print('Динамика уровня зарплат по годам:',sort_yeat_dict(years_salary_dict))
+    #print('Динамика количества вакансий по годам:',sort_yeat_dict(years_vac_dict))
+    #print('Динамика уровня зарплат по годам для выбранной профессии:',sort_yeat_dict(years_salary_prof_dict))
+    #print('Динамика количества вакансий по годам для выбранной профессии:',sort_yeat_dict(yaers_vac_prof_dict))
+    #print('Уровень зарплат по городам (в порядке убывания):',cities_stat.cities_salary_dict)
+    #print('Доля вакансий по городам (в порядке убывания):',cities_stat.cities_vac_dict)
